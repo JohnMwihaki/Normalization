@@ -189,10 +189,10 @@ BCNF is a stricter version of 3NF. It ensures that every determinant  in a table
 **Student Table **
 |Student|	Teacher	|Subject|
 |-------|-------|-------|
-|Adam	|kimani|	Bio|
-|Adam	|Mark	|Maths|
+|Adam	|kimani|	oop|
+|Adam	|Mark	|database|
 |Alex	|purity|	Maths|
-|john|	Precious|	Maths|
+|john|	Precious|	Ml & AI|
  
  The above relation is not in BCNF, because in the FD (teacher->subject), teacher is not a key. This relation suffers with anomalies 
 
