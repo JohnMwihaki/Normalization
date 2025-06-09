@@ -135,8 +135,50 @@ So in this student table their is partial dependency in which the Age attribute 
 
 While the candidate key is (Student, Subject), Age of student only depends on Student column.
 
+**3rd Normalization Form(3NF)**
+
+In 3NF every non-prime attribute of table must be dependent on primary key. The transitive functional
+dependency must be removed from the table.  A transitive dependency occurs when a non-key attribute depends on another non-key attribute, which in turn depends on the primary key.
 
 
+| Student_id | Student_Name | DOB       | Street       | City      | State    | Zip     |
+|------------|--------------|-----------|--------------|-----------|----------|---------|
+
+In this table Student_Id is the primary key, but street, city and State depends on Zip. The dependency
+between Zip and other fields creates transtive dependency. Hence, to apply 3rd normal form, we need
+to remove Street, City and State to a new table with Zip as a primary key.
+
+ *Normalized Tables (After 3NF)*
+
+**Table 1: Student_Detail**
+| Student_id | Student_Name | DOB       |
+|-----------------|--------------|-----------|
+
+**Table 2: Address**
+| Zip  | Street       | City      | State    |
+|----------|--------------|-----------|----------|
 
 
+# Transaction Management In DBMS
 
+**Transaction** is a single logical unit of work which accesses and possibly modifies the
+contents of a database. Transactions access data using read and write operations.
+In order to maintain consistency in a database, before and after the transaction, certain
+properties are followed. These are called ACID properties.
+
+<img src="./images/acid.png">
+
+**Atomicity**
+ This  mean that either the entire transaction takes place at once or doesn’t happen at all.
+There is no midway i.e. transactions do not occur partially. Each transaction is considered as
+one unit and either runs to completion or is not executed at all. It involves the following two
+operations. 
+
+- Abort: If a transaction aborts, changes made to database are not visible.
+- Commit:If a transaction commits, changes made are visible. 
+
+Example:
+Consider the following transaction T consisting of T1 and T2: Transfer of 100 from
+account X to account Y. 
+|Before:500|Y:200|
+|----------|------|
