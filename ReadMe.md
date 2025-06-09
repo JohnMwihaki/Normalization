@@ -52,6 +52,19 @@ Adding extra attributes to both sides of a dependency keeps it valid.
 If one attribute depends on another, and that one depends on a third, the first can determine the third.
 ```Example: If A → B and B → C, then A → C.```
 
+**Decomposition**
+
+Decomposition refers to the division of tables into multiple tables to produce consistency in the data.
+```Example: If X → YZ, then X → Y and X → Z```
+
+### Type of Functional Dependency
+
+ *Trivial functional dependency*
+- A trivial functional dependency in a relational database happens when an attribute or a set of attributes uniquely determines itself or a part of itself. For example, if A leads to A or A, B leads to A, these are trivial dependencies. 
+
+ *Non-trivial functional dependency*
+- A non-trivial functional dependency in a relational database occurs when an attribute or set of attributes uniquely determines another attribute or set that is not included in the original attributes. Simply put, if A determines B, and B is not part of A, this is a non-trivial dependency.
+
 ## Types of Database Normalization
 
 <img src="./images/Screenshot 2025-06-09 153415.png">
@@ -157,6 +170,56 @@ to remove Street, City and State to a new table with Zip as a primary key.
 **Table 2: Address**
 | Zip  | Street       | City      | State    |
 |----------|--------------|-----------|----------|
+
+---
+**Boyce-Codd Normal Form (BCNF)**
+
+BCNF is based on functional dependencies that consider all candidate keys in a relationship.
+
+BCNF is a stricter version of 3NF. It ensures that every determinant  in a table is a candidate key. The whole essence of this is that all determinants should be able to serve as primary keys.
+
+**Rules For BCNF**
+
+- The table should be in the 3rd Normal form.
+- X should be a super-key for every functional dependency X->Y in a given relation.
+
+<u>Example</u>
+
+
+**Student Table **
+|Student|	Teacher	|Subject|
+|-------|-------|-------|
+|Adam	|kimani|	Bio|
+|Adam	|Mark	|Maths|
+|Alex	|purity|	Maths|
+|john|	Precious|	Maths|
+ 
+ The above relation is not in BCNF, because in the FD (teacher->subject), teacher is not a key. This relation suffers with anomalies 
+
+ For example, if we try to delete the student Adam, we will lose the information that kimani teaches Bio.
+
+ **Decomposition for BCNF**
+
+Teacher-> subject violates BCNF -since teacher is not a candidate key.
+
+If X->Y violates BCNF then divide Table into Table1(X, Y) and Table2(R-Y).
+
+**Table1**
+
+| Teacher   | Subject  |
+|-----------|----------|
+| Kimani  | oop |
+| Mark    | database     |
+| precious | maths    |
+|purity |ML & AI|
+
+**Table2**
+| Student   | Teacher  |
+|-----------|----------|
+| Adam  | kimani
+| Adam    | mark     |
+| Alex | precious    |
+|john |purity|
 
 
 # Transaction Management In DBMS
