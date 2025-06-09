@@ -103,7 +103,7 @@ A table is in 2NF if:
 - Non-prime attribute − An attribute, which is not a part of the prime-key, is said to be a non-prime attribute.
 - Partial Dependency: When a non-prime attribute depends on only a part of a composite primary key.
 
-Example of 2Nf
+**Example of 2Nf**
 
 **Student Table **
 |Student|	Age	|Subject|
@@ -169,16 +169,61 @@ properties are followed. These are called ACID properties.
 <img src="./images/acid.png">
 
 **Atomicity**
+
  This  mean that either the entire transaction takes place at once or doesn’t happen at all.
 There is no midway i.e. transactions do not occur partially. Each transaction is considered as
 one unit and either runs to completion or is not executed at all. It involves the following two
 operations. 
 
-- Abort: If a transaction aborts, changes made to database are not visible.
-- Commit:If a transaction commits, changes made are visible. 
+- **Abort:** If a transaction aborts, changes made to database are not visible.
+- **Commit:** If a transaction commits, changes made are visible. 
 
 Example:
 Consider the following transaction T consisting of T1 and T2: Transfer of 100 from
 account X to account Y. 
-|Before:500|Y:200|
-|----------|------|
+Account X to account Y.
+
+| Before: X : 500    | Y: 200    |
+|--------------------|----------|
+| Transaction T     |          |
+| T1                | T2       |
+| Read (X)          | Read (Y) |
+| X := X - 100      | Y := Y + 100 |
+| Write (X)         | Write (Y) |
+| After: X : 400    | Y : 300  |
+
+If the transaction fails after completion of T1 but before completion of T2.( say,
+after write(X) but before write(Y)), then amount has been deducted from X but not added
+to Y. This results in an inconsistent database state. Therefore, the transaction must be executed
+in entirety in order to ensure correctness of database state. 
+
+
+
+**Consistency**
+
+This means that integrity constraints must be maintained so that the database is consistent
+before and after the transaction. It refers to the correctness of a database. Referring to the
+example above, The total amount before and after the transaction must be maintained.
+
+```Total before T occurs = 500 + 200 = 700.```
+
+```Total after T occurs = 400 + 300 = 700.```
+
+Therefore, database is consistent. Inconsistency occurs in case T1 completes but T2 fails. As
+a result T is incomplete.
+
+**Isolation**
+
+This property ensures that multiple transactions can occur concurrently without leading to the
+inconsistency of database state. Transactions occur independently without interference.
+Changes occurring in a particular transaction will not be visible to any other transaction until
+that particular change in that transaction is written to memory or has been committed. This
+property ensures that the execution of transactions concurrently will result in a state that is
+equivalent to a state achieved these were executed serially in some order.
+
+**Durability:**
+
+This property ensures that once the transaction has completed execution, the updates and
+modifications to the database are stored in and written to disk and they persist even if a system
+failure occurs. These updates now become permanent and are stored in non-volatile memory.
+The effects of the transaction, thus, are never lost. 
